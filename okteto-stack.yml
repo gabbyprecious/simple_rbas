@@ -1,0 +1,31 @@
+name: simple-rbas
+services:
+
+  rbas-db:
+    image: postgres:11
+    ports:
+      - 5432
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=pgpass
+      - POSTGRES_DB=pgdb
+    resources:
+      cpu: 100m
+      memory: 128Mi
+  
+  simple-rbas:
+    public: true
+    image: gabbyprecious/simple-rbas:latest
+    build: .
+    replicas: 1
+    command: bash -c "gunicorn simple_rbas.wsgi --reload -b 0.0.0.0:8000"
+    ports:
+      - 8000
+    resources:
+      cpu: 100m
+      memory: 128Mi
+    environment:
+      - DJANGO_READ_DOT_ENV_FILE=true
+      - DATABASE_URL=postgresql://pguser:pgpass@notes-db:5432/pgdb
+      - COOKIE_SECURE=false
+      - DEBUG=false
