@@ -24,8 +24,10 @@ services:
     resources:
       cpu: 100m
       memory: 128Mi
+    env_file:
+      - .env
     environment:
       - DJANGO_READ_DOT_ENV_FILE=true
       - DATABASE_URL=postgresql://pguser:pgpass@notes-db:5432/pgdb
-      - COOKIE_SECURE=false
+      - COOKIE_SECURE=true
       - DEBUG=false

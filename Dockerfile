@@ -18,4 +18,4 @@ COPY . /simple_rbas/
 
 WORKDIR /simple_rbas
 
-CMD ["gunicorn", "simple_rbas.wsgi"]
+CMD ["run_web.sh"]
